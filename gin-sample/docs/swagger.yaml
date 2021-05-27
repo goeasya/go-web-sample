@@ -1,0 +1,147 @@
+definitions:
+  request.UserDelReq:
+    properties:
+      userId:
+        type: string
+    required:
+    - userId
+    type: object
+  request.UserLoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.UserRegisterReq:
+    properties:
+      email:
+        type: string
+      nickname:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - nickname
+    - password
+    - username
+    type: object
+  request.UserUpdateReq:
+    properties:
+      email:
+        type: string
+      nickname:
+        type: string
+      userId:
+        type: string
+    required:
+    - userId
+    type: object
+  response.LoginToken:
+    properties:
+      token:
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /api/v1/user/:
+    delete:
+      parameters:
+      - description: param for body
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserDelReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success": true, "code": 200,"data":[],"msg":"success"}'
+          schema:
+            type: string
+      summary: 删除用户,软删除
+      tags:
+      - user
+    put:
+      parameters:
+      - description: param for body
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success": true, "code": 200,"data":[],"msg":"success"}'
+          schema:
+            type: string
+      summary: 修改用户信息
+      tags:
+      - user
+  /api/v1/user/detail:
+    get:
+      parameters:
+      - description: username
+        in: query
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success": true, "code": 200,"data":[],"msg":"success"}'
+          schema:
+            type: string
+      summary: 获取用户细节
+      tags:
+      - user
+  /user/login:
+    post:
+      parameters:
+      - description: param for body
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success": true, "code": 200,"data":[],"msg":"success"}'
+          schema:
+            $ref: '#/definitions/response.LoginToken'
+      summary: 用户登录
+      tags:
+      - user
+  /user/register:
+    post:
+      parameters:
+      - description: param for body
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserRegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success": true, "code": 200,"data":[],"msg":"success"}'
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - user
+swagger: "2.0"
